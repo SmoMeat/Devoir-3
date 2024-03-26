@@ -15,7 +15,8 @@
 	BRZ	zeroOut
 
 # While num > 0
-while	LDA	num
+WHILE	LDA	minus
+	STO	divCtr
 	
 # Modulo: result = num % base
 	LDA	num
@@ -24,16 +25,25 @@ MODULO	STO	result
 	SUB	base
 	BRP	MODULO
 	LDA	result
-	# Save result in array
-	# num = num // base
-	# if num > 0 go back else continue
-
-
-
 	OUT
-	HLT
+	# Save result in array
 
-# Print the array...
+# Division: num = num // base
+DIV	LDA	divCtr
+	ADD	one
+	STO	divCtr
+	LDA	num
+	SUB	base
+	STO	num
+	BRP	DIV
+
+	LDA	divCtr
+	STO	num
+	BRZ	EXIT
+	BRP	WHILE
+
+# print array before exit...
+EXIT	HLT
 
 
 zeroOut	LDA	zero
@@ -47,15 +57,23 @@ err	LDA	error
 # Variables
 num	DAT	000
 base	DAT	000
+divCtr	DAT	000
 result	DAT	000
 # Constantes
+minus	DAT	-1
 zero	DAT	000
 one	DAT	001
 ten	DAT	010
 # Error
 error	DAT	499
+exit	DAT	498
 # Tableau
 tab	DAT	010
 	DAT	020
 	DAT	030
 	DAT	040
+	DAT	050
+	DAT	060
+	DAT	070
+	DAT	080
+	DAT	090
