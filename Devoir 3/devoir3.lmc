@@ -16,11 +16,17 @@
 
 # While num > 0
 while	LDA	num
-	BRP	print
-
-
-
-
+	
+# Modulo: result = num % base
+	LDA	num
+MODULO	STO	result
+	LDA	result
+	SUB	base
+	BRP	MODULO
+	LDA	result
+	# Save result in array
+	# num = num // base
+	# if num > 0 go back else continue
 
 
 
@@ -28,7 +34,7 @@ while	LDA	num
 	HLT
 
 # Print the array...
-print	LDA
+
 
 zeroOut	LDA	zero
 	OUT
@@ -41,6 +47,7 @@ err	LDA	error
 # Variables
 num	DAT	000
 base	DAT	000
+result	DAT	000
 # Constantes
 zero	DAT	000
 one	DAT	001
