@@ -1,0 +1,54 @@
+	IN
+	STO	num
+	IN
+	STO	base
+	
+# S'assure que la base est valide (entre 2 et 9)
+	SUB	ten	# acc = base - 10
+	BRP	err	# base - 10 >= 0 ? throw Error : continue
+	LDA	one	# acc = 1
+	SUB	base	# acc = 1 - base
+	BRP	err	# 1 - base >= 0 ? throw Error : continue
+	
+# Retourne 0 si le nombre est 0 en base 10
+	LDA	num
+	BRZ	zeroOut
+
+# While num > 0
+while	LDA	num
+	BRP	print
+
+
+
+
+
+
+
+	OUT
+	HLT
+
+# Print the array...
+print	LDA
+
+zeroOut	LDA	zero
+	OUT
+	HLT
+	
+err	LDA	error
+	OUT
+	HLT
+
+# Variables
+num	DAT	000
+base	DAT	000
+# Constantes
+zero	DAT	000
+one	DAT	001
+ten	DAT	010
+# Error
+error	DAT	499
+# Tableau
+tab	DAT	010
+	DAT	020
+	DAT	030
+	DAT	040
