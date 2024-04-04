@@ -13,10 +13,10 @@
 	
 # S'assure que la base est valide (entre 2 et 9)
 	SUB	ten	# acc = base - 10
-	BRP	err	# base - 10 >= 0 ? throw Error : continue
+	BRP	EXIT	# base - 10 >= 0 ? ferme le programme : continue
 	LDA	one	# acc = 1
 	SUB	base	# acc = 1 - base
-	BRP	err	# 1 - base >= 0 ? throw Error : continue
+	BRP	EXIT	# 1 - base >= 0 ? ferme le programme : continue
 	
 # Retourne 0 si le nombre est 0 en base 10
 	LDA	num
@@ -34,16 +34,12 @@ MODULO	STO	result	# sinon result = result - base
 	SUB	base	
 	BRP	MODULO	# result - base >= 0 ? goto MODULO : continue
 
-## Enregistre dans le tableau de resultat du modulo (num % base)
-#	LDA	result
-#	
-#
-#save	STO	tabStart
-#
-#	LDA	result
-
-	#OUT
-	# Save result in array
+# Enregistre dans le tableau de resultat du modulo (num % base)
+	LDA	result
+save	STO	tabStart
+	LDA	save
+	ADD	one
+	STO	save
 
 # Division: num = num // base
 DIV	LDA	divCtr
@@ -56,8 +52,7 @@ DIV	LDA	divCtr
 
 	LDA	divCtr
 	STO	num	# num = num // base
-		# ** replaced BRZ EXIT -> BRZ print
-	BRZ	print	# num == 0 ? exit : continue
+	BRZ	print	# num == 0 ? print(tab) : continue
 	BRP	WHILE	# num > 0 ? goto WHILE : continue
 	HLT		# Sort du programme dans le cas ou num est negatif
 				
@@ -77,7 +72,7 @@ noPrint	LDA	cmp
 	STO	print
 	BR	print
 	
-# print array before exit...
+
 EXIT	HLT
 
 
@@ -85,26 +80,26 @@ zeroOut	LDA	zero
 	OUT
 	HLT
 	
-err	LDA	error
-	OUT
-	HLT
+
+
+
 
 # Variables
 num	DAT	000
 base	DAT	000
 divCtr	DAT	000
 result	DAT	000
+
 # Constantes
 minus	DAT	-1
-zero	DAT	000
-one	DAT	001
-ten	DAT	010
-# Error
-error	DAT	499
-exit	DAT	498
+zero	DAT	0
+one	DAT	1
+ten	DAT	10
+
 # Tableau parametres
 len	DAT	9	# = 9
 cmp	DAT	0
+
 # Tableau valeurs
 tabStart	DAT	0
 	DAT	10
