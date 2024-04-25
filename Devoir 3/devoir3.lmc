@@ -20,7 +20,7 @@
 	
 # Retourne 0 si le nombre est 0 en base 10
 	LDA	num
-	BRZ	zeroOut	# num == 0 ? zeroOut() : continue
+	BRZ	print	# num == 0 ? print(0) : continue
 
 # *Convertision du nombre*
 #  while num > 0
@@ -76,12 +76,6 @@ noPrint	LDA	cmp
 EXIT	HLT
 
 
-zeroOut	LDA	zero
-	OUT
-	HLT
-	
-
-
 
 
 # Variables
@@ -97,7 +91,7 @@ one	DAT	1
 ten	DAT	10
 
 # Tableau parametres
-len	DAT	9	# = 9
+len	DAT	9	# taille du tableau = 9
 cmp	DAT	0
 
 # Tableau valeurs

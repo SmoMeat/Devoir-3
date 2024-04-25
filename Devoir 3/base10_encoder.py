@@ -12,20 +12,17 @@ def base_convert(num: int, base: int) -> int:
         num = num // base
 
     return result
+    
 
-
-def read_base_convert(num: int, base: int) -> int:
+def print_base_convert(num: int, base: int) -> None:
     result = base_convert(num, base)
-    value = ''
 
-    for digit in result:
-        value = str(digit) + value
-
-    return int(value)
+    for digit in result[::-1]:
+        print(digit)
 
 
 if __name__ == '__main__':
-    for num in range(1000):
-        assert read_base_convert(num, 2) == int(bin(num).removeprefix('0b'))
+    num = int(input('Entrez un nombre en base 10 a convertir: '))
+    base = int(input('Entrer la base vers laquelle convertir: '))
 
-    print(base_convert(0, 2))
+    print_base_convert(num, base)
